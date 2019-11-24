@@ -1,5 +1,5 @@
-# superstar
-使用Go语言的iris+xorm框架，实现的球星库
+# my_server
+使用Go语言的iris+xorm框架
 <br/>
 
 ## golang下载 1.9.7
@@ -33,7 +33,3 @@ GoLand https://www.jetbrains.com/go/download/
 <br/>
 https://dev.mysql.com/downloads/mysql/5.7.html
 <br/>
-
-## 其它参考
-<br/>
-http://2018.sina.com.cn/ballgamestar/
