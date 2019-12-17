@@ -19,7 +19,15 @@ type UserForm struct {
 /**
  * 登录校验
  */
-func (c *UsersController) LoginBlog() {
+func (c *UsersController) Login() {
+	c.TplName = "login.tpl"
+}
+
+
+/**
+ * 登录校验
+ */
+func (c *UsersController) LoginAction() {
 	u := UserForm{}
 	if err := c.ParseForm(&u); err != nil {
 		//do something
