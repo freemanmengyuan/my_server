@@ -17,7 +17,7 @@ type UserInfo struct {
 
 func init() {
 	orm.Debug = true //是否开启调试模式
-	orm.RegisterDataBase("default", "mysql", "root:$garo&&469312$@tcp(144.34.144.200:3306)/server?charset=utf8", 30)
+	orm.RegisterDataBase("default", "mysql", "root:123456@tcp(127.0.0.1:3306)/server?charset=utf8", 30)
 	//orm.RegisterDataBase("default", "mysql", "root:root@tcp(127.0.0.1:3306)/server?charset=utf8", 30)
 	orm.RegisterModel(new(UserInfo))
 	db = orm.NewOrm()
