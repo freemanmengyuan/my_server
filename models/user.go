@@ -2,7 +2,7 @@ package models
 
 import (
 	"github.com/astaxie/beego/orm"
-	_"github.com/go-sql-driver/mysql"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 var (
@@ -11,7 +11,7 @@ var (
 
 type UserInfo struct {
 	Id int64
-	Username string
+	Name string
 	Password string
 }
 
@@ -34,9 +34,9 @@ func AddUser(user *UserInfo) (int64, error){
 /**
  * 获取用户信息
  */
-func GetUser(user *UserInfo) (int64, error){
-	id,err := db.Insert(user)
-	return id,err
+func GetUser(id int64, user *UserInfo){
+	user.Id = id
+	db.Read(&user)
 }
 
 /**
@@ -47,6 +47,16 @@ func GetUsers(users *[]UserInfo){
 	qb.Select("*").From("user_info")
 	sql := qb.String()
 	db.Raw(sql).QueryRows(users)
+}
+
+/**
+ * 校验用户
+ */
+func CheckUser(name string, user *UserInfo){
+	qb,_ := orm.NewQueryBuilder("mysql")
+	qb.Select("password").From("user_info").Where("name=?").Limit(1)
+	sql := qb.String()
+	db.Raw(sql, name).QueryRows(user)
 }
 
 

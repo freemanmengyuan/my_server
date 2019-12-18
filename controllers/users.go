@@ -12,17 +12,16 @@ type UsersController struct {
 }
 
 type UserForm struct {
-	Username string
+	Name string
 	Password string
 }
 
 /**
- * 登录校验
+ * 登录页
  */
 func (c *UsersController) Login() {
 	c.TplName = "login.tpl"
 }
-
 
 /**
  * 登录校验
@@ -34,11 +33,9 @@ func (c *UsersController) LoginAction() {
 		c.Ctx.WriteString("err")
 	}
 
-	c.Ctx.SetCookie("name", u.Username, 1000, "/")
-	c.Data["username"] = u.Username
+	c.Ctx.SetCookie("name", u.Name, 1000, "/")
+	c.Data["username"] = u.Name
 	c.TplName = "user.tpl"
-	//c.Ctx.WriteString(u.Username + "您好啊 欢迎登录 Blog")
-	//c.Ctx.WriteString( "<html><a href='/blog/edit'>点我</a></html>")
 }
 
 /**
@@ -50,20 +47,24 @@ func (c *UsersController) RegestUser() {
 		//do something
 		c.Ctx.WriteString("err")
 	}
-	user := models.UserInfo{Username:u.Username, Password:u.Password}
+	user := models.UserInfo{Name:u.Name, Password:u.Password}
 	id,err := models.AddUser(&user)
 	if err == nil {
 		c.Ctx.WriteString(fmt.Sprintf("user regest success %d ", id))
 	}
 }
 
+/**
+ * 获取所有用户
+ */
 func (c *UsersController) GetUsers() {
 
 	var users []models.UserInfo
 	models.GetUsers(&users)
-	c.Data["users"] = users
+	/*c.Data["users"] = users
 	c.Data["len"] = len(users)
-	c.TplName = "user.tpl"
+	c.TplName = "user.tpl"*/
+	c.Ctx.Output.JSON(users, false, false)
 }
 
 

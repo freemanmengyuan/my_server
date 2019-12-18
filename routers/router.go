@@ -25,7 +25,8 @@ func init() {
 
 	// 用户相关
 	beego.Router("/users/login", &controllers.UsersController{}, "Get:Login")
-	beego.Router("/users/login", &controllers.UsersController{}, "Post:LoginAction")
+	beego.Router("/users/login-deal", &controllers.UsersController{}, "Post:LoginAction")
 	beego.Router("/users/regest", &controllers.UsersController{}, "Get:RegestUser")
+	beego.Router("/users", &controllers.UsersController{}, "Get:GetUsers")
 
 }
