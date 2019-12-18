@@ -17,15 +17,9 @@ type UserInfo struct {
 }
 
 func init() {
-	iniconf, _ := config.NewConfig("ini", "conf/app.conf")
-	env := iniconf.String("runmode");
-	dbhost := iniconf.String(env+"::dbhost")
-	dbport := iniconf.String(env+"::dbport")
-	dbuser := iniconf.String(env+"::dbuser")
-	dbpassword := iniconf.String(env+"::dbpassword")
-	str := dbuser+":"+dbpassword+"@tcp("+dbhost+":"+dbport+")/server?charset=utf8"
+	sDbConf := GetDbConf()
 	orm.Debug = true //是否开启调试模式
-	orm.RegisterDataBase("default", "mysql", str, 30)
+	orm.RegisterDataBase("default", "mysql", sDbConf, 30)
 	orm.RegisterModel(new(UserInfo))
 	db = orm.NewOrm()
 }
@@ -66,6 +60,18 @@ func CheckUser(name string, user *UserInfo){
 	db.Raw(sql, name).QueryRows(user)
 }
 
-
+/**
+ * 获取数据库配置
+ */
+func GetDbConf() string {
+	iniconf, _ := config.NewConfig("ini", "conf/app.conf")
+	env := iniconf.String("runmode");
+	dbhost := iniconf.String(env+"::dbhost")
+	dbport := iniconf.String(env+"::dbport")
+	dbuser := iniconf.String(env+"::dbuser")
+	dbpassword := iniconf.String(env+"::dbpassword")
+	str := dbuser+":"+dbpassword+"@tcp("+dbhost+":"+dbport+")/server?charset=utf8"
+	return str
+}
 
 
