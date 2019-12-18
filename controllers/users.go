@@ -58,11 +58,7 @@ func (c *UsersController) RegestUser() {
  * 获取所有用户
  */
 func (c *UsersController) GetUsers() {
-	/*iniconf, err := config.NewConfig("ini", "app.conf")
-	if err != nil {
-		c.Ctx.WriteString("hell")
-	}
-	c.Ctx.WriteString(iniconf.String("app"))*/
+
 	var users []models.UserInfo
 	models.GetUsers(&users)
 

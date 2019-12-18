@@ -1,6 +1,7 @@
 package models
 
 import (
+	"github.com/astaxie/beego/config"
 	"github.com/astaxie/beego/orm"
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -16,9 +17,15 @@ type UserInfo struct {
 }
 
 func init() {
+	iniconf, _ := config.NewConfig("ini", "conf/app.conf")
+	env := iniconf.String("runmode");
+	dbhost := iniconf.String(env+"::dbhost")
+	dbport := iniconf.String(env+"::dbport")
+	dbuser := iniconf.String(env+"::dbuser")
+	dbpassword := iniconf.String(env+"::dbpassword")
+	str := dbuser+":"+dbpassword+"@tcp("+dbhost+":"+dbport+")/server?charset=utf8"
 	orm.Debug = true //是否开启调试模式
-	orm.RegisterDataBase("default", "mysql", "root:123456@tcp(127.0.0.1:3306)/server?charset=utf8", 30)
-	//orm.RegisterDataBase("default", "mysql", "root:root@tcp(127.0.0.1:3306)/server?charset=utf8", 30)
+	orm.RegisterDataBase("default", "mysql", str, 30)
 	orm.RegisterModel(new(UserInfo))
 	db = orm.NewOrm()
 }
