@@ -65,7 +65,7 @@ func CheckUser(name string, user *UserInfo){
  */
 func GetDbConf() string {
 	iniconf, _ := config.NewConfig("ini", "conf/app.conf")
-	env := iniconf.String("runmode");
+	env := iniconf.String("runmode")
 	dbhost := iniconf.String(env+"::dbhost")
 	dbport := iniconf.String(env+"::dbport")
 	dbuser := iniconf.String(env+"::dbuser")
