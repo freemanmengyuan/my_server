@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"blog/models"
+	"my_server/models"
 	"fmt"
 	"github.com/astaxie/beego"
 )
